@@ -2,6 +2,7 @@ const express = require("express");
 const { Pool } = require("pg");
 const session = require("express-session");
 const passport = require("passport");
+const indexRouter = require("./routes/indexRouter");
 const LocalStrategy = require("passport-local").Strategy;
 
 //create pool connection
@@ -70,16 +71,15 @@ passport.deserializeUser(async (id, done) => {
     done(err);
   }
 });
+/*
 app.post(
   "/log-in",
   passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/",
   })
-);
-app.get("/", (req, res) => {
-  res.render("index", { user: req.user });
-});
+);*/
+app.use("/", indexRouter);
 app.get("/log-out", (req, res, next) => {
   req.logout((err) => {
     if (err) {
